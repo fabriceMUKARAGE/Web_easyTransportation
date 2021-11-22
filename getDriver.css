@@ -1,0 +1,22 @@
+
+body{
+    text-align: center;
+}
+.student h1{
+     color: rgb(27, 27, 27);
+
+}
+.classA{
+    display: flex;
+     /* align horizontal */
+   
+    }
+    .classAA{
+      width: 100%;
+      padding: 0px;
+    }
+
+      
+
+
+

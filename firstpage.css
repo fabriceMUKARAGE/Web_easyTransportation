@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Roboto:wght@400;700&display=swap');
+
+
+
+body{
+    background: rgb(27, 27, 27);
+    color: white; 
+    font-family: Roboto;
+
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+@media (min-width: 992px){
+    .nav-item{
+        padding: 0 1.5rem;
+    }
+}
+
+.image{
+    padding:100px;
+    padding-top:0px
+}
+.custom-btn{
+    margin-top: 2em;
+    width: 100%;
+}
+
+footer{
+    background-color: #004000;
+    color: #cccccc;
+    padding-top: 80px;
+    padding-right: 250px;
+    padding-bottom: 80px;
+    padding-left: 250px;
+    display: block;
+  }
+  
+  .footerDetails{
+    display: flex;
+     /* align horizontal */
+   
+    }
+
+  .foot1 ion-icon{
+      color:  #ffffff;
+      font-size: 20px;
+      padding-left: 14px;
+      padding-top: 5px; 
+      transition: 0.3s ease;
+  }
+  .foot1 ion-icon:hover{
+      color: green;
+  }
+    .foot1{
+      width: 100%;
+      padding: 0px;
+    }
+    .foot1 span{
+      color: white;
+    }
+
+    .foot2{
+      width: 25%;
+      padding: 10px;
+    }
+    
+  .btn{
+      width: 150px;
+      height: 40px;
+      background:  green;
+      color: #ffffff;
+      font-size: 14px;
+  }
