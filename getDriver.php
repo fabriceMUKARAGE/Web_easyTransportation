@@ -48,7 +48,7 @@ $location= $_POST['location'];
 		die("Connection failed: " . $conn->connect_error);
 	  }
  	  
-      $sql= "INSERT INTO StudentLogin (Ashesi_email, password, phone_number, location) VALUES ('$email', '$password','$phone', '$location')";
+      $sql= "INSERT INTO studentlogin (Ashesi_email, password, phone_number, location) VALUES ('$email', '$password','$phone', '$location')";
 
 	if ($conn->query($sql) === FALSE) {
 		echo "Error: " . $sql . "<br>" . $conn->error;

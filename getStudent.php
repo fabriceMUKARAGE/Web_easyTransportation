@@ -55,7 +55,7 @@ $location= $_POST['location'];
 		die("Connection failed: " . $conn->connect_error);
 	  }
  	  
-      $sql= "INSERT INTO DriverLogin (first_name, password, phone_number, location) VALUES ('$firstname', '$password','$phone', '$location')";
+      $sql= "INSERT INTO driverlogin (first_name, password, phone_number, location) VALUES ('$firstname', '$password','$phone', '$location')";
 
 	if ($conn->query($sql) === FALSE) {
 		echo "Error: " . $sql . "<br>" . $conn->error;
@@ -83,7 +83,7 @@ $location= $_POST['location'];
                           if(isset($_POST['view'])){
                           echo '<div class="card-header py-2">Available Students right now
                           </div>';
-                          $sql = "SELECT * FROM StudentLogin";
+                          $sql = "SELECT * FROM studentlogin";
                           $result = mysqli_query($conn, $sql);
                           if (mysqli_num_rows($result)>0){
                             echo '<div class="table-responsive">';
