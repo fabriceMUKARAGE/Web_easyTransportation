@@ -22,7 +22,7 @@ if (! empty($_POST["signup-btn"])) {
 				<a href="loginD.php">Login</a>
 			</div>
 			<div class="">
-				<form name="sign-up" action="loginD.PHP" method="post"
+				<form name="sign-up" action="loginD.php" method="post"
 					onsubmit="return signupValidation()">
 					<div class="signup-heading">Register as Driver</div>
 				<?php
