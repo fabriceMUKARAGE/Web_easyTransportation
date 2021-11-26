@@ -24,7 +24,7 @@
                           <?php 
                           
                           // Database connection
-	                        $conn = new mysqli('localhost','root','Agahozo12!@','Easy_Transportation');
+	                        $conn = new mysqli('localhost','root','Agahozo12!@','easy_transportation');
 	                        if ($conn->connect_error) {
 		                        die("Connection failed: " . $conn->connect_error);
 	                        }

@@ -1,50 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="studentstyle.css">
-    <title>student's log in form</title>
-</head>
-<body>
-    <!-- form for the login as a student -->
-    <div class="container">
-        <form id="form" class="form" action="getDriver.php" method="POST">
-            <h2 sytle="color=white">log in as student now</h2>
-            <div class="form-control">
-                <label for="email">Ashesi Email</label>
-                <input type="text" placeholder="Enter Email" name="email" id="email">
-                <small id='emailError'></small>
-            </div>
+<?php
+use Phppot\Member;
 
-            <div class="form-control">
-                <label for="phone">Password</label>
-                <input type="password" placeholder="Enter your password" name="Password" id="Password">
-                <small id='PasswordError'></small>
-            </div>
+if (! empty($_POST["login-btn"])) {
+    require_once __DIR__ . '/Model/Member.php';
+    $member = new Member();
+    $loginResult = $member->loginMember();
+}
+?>
+<HTML>
+<HEAD>
+<TITLE>Student login</TITLE>
+<link href="assets/css/phppot-style.css" type="text/css"
+	rel="stylesheet" />
+<link href="assets/css/user-registration.css" type="text/css"
+	rel="stylesheet" />
+<script src="vendor/jquery/jquery-3.3.1.js" type="text/javascript"></script>
+</HEAD>
+<BODY>
+	<div class="phppot-container">
+		<div class="sign-up-container">
+			<div class="login-signup">
+				<a href="signupS.php">Sign up</a>
+			</div>
+			<div class="signup-align">
+				<form name="login" action="getDriver.php" method="post"
+					onsubmit="return loginValidation()">
+					<div class="signup-heading">Login as Student</div>
+				<?php if(!empty($loginResult)){?>
+				<div class="error-msg"><?php echo $loginResult;?></div>
+				<?php }?>
+				<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Ashesi Email<span class="required error" id="email-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="email"
+								id="email">
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Password<span class="required error" id="password-info"></span>
+							</div>
+							<input class="input-box-330" type="password"
+								name="password" id="password">
+						</div>
+					</div>
+					<div class="row">
+					<div class="inline-block">
+							<div class="form-label">
+								Phone number<span class="required error" id="phone-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="phone"
+								id="phone">
+						</div>
+					</div>
+					<div class="row">
+					<div class="inline-block">
+							<div class="form-label">
+								Location<span class="required error" id="location-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="location"
+								id="location">
+						</div>
+					</div>
+					<div class="row">
+						<input class="btn" type="submit" name="login-btnS"
+							id="login-btn" value="Login">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-            <div class="form-control">
-                <label for="phone">Phone Number</label>
-                <input type="text" placeholder="Enter your phone" name="phone" id="phone">
-                <small id='phoneNumberError'></small>
-            </div>
+	<script>
+function loginValidation() {
+	var valid = true;
+	$("#firstname").removeClass("error-field");
+	$("#password").removeClass("error-field");
 
-            <div class="form-control">
-                <label for="phone">Location</label>
-                <input type="text" placeholder="Enter your location" name="location" id="location">
-                <small id='LocationError'></small>
-            </div>
+	var firstname = $("#firstname").val();
+	var Password = $('#password').val();
 
-            <small id='success'></small>
-            <button type="submit" name="submitloginS"id='submitBtn'>log in</button>
-        </form>        
-    </div>
+	$("#firstname-info").html("").hide();
+
+	if (firstname.trim() == "") {
+		$("#firstname-info").html("required.").css("color", "#ee0000").show();
+		$("#firstname").addClass("error-field");
+		valid = false;
+	}
+	if (Password.trim() == "") {
+		$("#login-password-info").html("required.").css("color", "#ee0000").show();
+		$("#password").addClass("error-field");
+		valid = false;
+	}
+	if (valid == false) {
+		$('.error-field').first().focus();
+		valid = false;
+	}
+	return valid;
+}
+</script>
+    
+    <?php
+/* if the driver makes registration, 
+    record into the database
+*/
+if(isset($_POST['signup-btnS'])){
+$firstname= $_POST['firstname'];
+$lastname= $_POST['lastname'];
+$email= $_POST['email'];
+$password= $_POST['password'];
+$phone= $_POST['phone'];
 
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="./script.js"></script>
 
+	//Database connection
+	require "database_credential.php";
+	$conn = new mysqli(servename, username, password, db);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	  }
+
+ 	// inserting the sign up data for a driver into the database
+	$sql= "INSERT INTO students_info (first_name, last_name, Ashesi_email, password, phone_number) VALUES ('$firstname', '$lastname', '$email', '$password', '$phone')";
+
+	if ($conn->query($sql) === FALSE) {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+    else{
+        echo "
+        <h2> <br><br> You are most welcome, $firstname<br> login in to get the student going or coming to accra</h2>
+        ";
+    }
+  
+		  
+	$conn->close();
+    
+
+}
+
+?>
+
+
+    
 
     
 <?php

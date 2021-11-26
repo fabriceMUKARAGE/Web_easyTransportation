@@ -1,57 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Studentstyle.css">
-    <title>Student's sign up form</title>
-</head>
-<body>
-    <!-- form for the sign up as a student -->
-    <div class="container">
-        <form id="form" class="form" action="loginS.php" method="POST">
-            <h2 sytle="color=white">Sign up as student now</h2>
-            <div class="form-control">
-                <label for="firstname">First name</label>
-                <input type="text" placeholder="First Name" id="firstname" name="firstnameS">
-                <small id='firstnameError'></small>
-            </div>
-            <div class="form-control">
-                <label for="lastname">Last name</label>
-                <input type="text" placeholder="Last Name" id="lastname" name="lastnameS">
-                <small id='lastnameError'></small>
-            </div>
-            <div class="form-control">
-                <label for="email">Ashesi email</label>
-                <input type="text" placeholder="Enter Email" id="email" name="emailS">
-                <small id='emailError'></small>
-            </div>
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input type="password" placeholder="Enter password" id="password" name="passwordS">
-                <small id='passwordError'></small>
-            </div>
+<?php
+use Phppot\Member;
+if (! empty($_POST["signup-btn"])) {
+    require_once './Model/Member.php';
+    $member = new Member();
+    $registrationResponse = $member->registerMember();
+}
+?>
+<HTML>
+<HEAD>
+<TITLE>Student registration</TITLE>
+<link href="assets/css/phppot-style.css" type="text/css"
+	rel="stylesheet" />
+<link href="assets/css/user-registration.css" type="text/css"
+	rel="stylesheet" />
+<script src="vendor/jquery/jquery-3.3.1.js" type="text/javascript"></script>
+</HEAD>
+<BODY>
+	<div class="phppot-container">
+		<div class="sign-up-container">
+			<div class="login-signup">
+				<a href="loginS.php">Login</a>
+			</div>
+			<div class="">
+				<form name="sign-up" action="loginS.php" method="post"
+					onsubmit="return signupValidation()">
+					<div class="signup-heading">Register as Student</div>
+				<?php
+    if (! empty($registrationResponse["status"])) {
+        ?>
+                    <?php
+        if ($registrationResponse["status"] == "error") {
+            ?>
+				    <div class="server-response error-msg"><?php echo $registrationResponse["message"]; ?></div>
+                    <?php
+        } else if ($registrationResponse["status"] == "success") {
+            ?>
+                    <div class="server-response success-msg"><?php echo $registrationResponse["message"]; ?></div>
+                    <?php
+        }
+        ?>
+				<?php
+    }
+    ?>
+				<div class="error-msg" id="error-msg"></div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								First Name<span class="required error" id="firstname-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="firstname"
+								id="firstname">	
+						</div>
+					</div>
 
-            <div class="form-control">
-                <label for="password2">Confirm Password</label>
-                <input type="password" placeholder="Confirm Your Password" id="password2">
-                <small id='password2Error'></small>
-            </div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Last Name<span class="required error" id="lastname-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="lastname"
+								id="lastname">	
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Ashesi Email<span class="required error" id="email-info"></span>
+							</div>
+							<input class="input-box-330" type="email" name="email" id="email">
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Password<span class="required error" id="signup-password-info"></span>
+							</div>
+							<input class="input-box-330" type="password"
+								name="password" id="password">
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Confirm Password<span class="required error"
+									id="confirm-password-info"></span>
+							</div>
+							<input class="input-box-330" type="password"
+								name="confirm-password" id="confirm-password">
+						</div>
+					</div>
 
-            <div class="form-control">
-                <label for="number">Phone Number</label>
-                <input type="text" placeholder="Enter Your Phone number" id="phone" name="phoneS">
-                <small id='password2Error'></small>
-            </div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Phone number<span class="required error" id="phone-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="phone"
+								id="phone">	
+						</div>
+					</div>
 
-            <small id='success'></small>
-            <button href="loginD.php" type="submit" name="submitS" id='submitBtn'>Sign up</button>
-        </form>        
-    </div>
+	
+					<div class="row">
+						<input class="btn" type="submit" name="signup-btnS"
+							id="signup-btn" value="Sign up">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="./script.js"></script>
-</body>
-</html>
+	<script>
+function signupValidation() {
+	var valid = true;
+
+	$("#firstname").removeClass("error-field");
+	$("#email").removeClass("error-field");
+	$("#password").removeClass("error-field");
+	$("#confirm-password").removeClass("error-field");
+
+	var firstname = $("#firstname").val();
+	var email = $("#email").val();
+	var Password = $('#password').val();
+    var ConfirmPassword = $('#confirm-password').val();
+	var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+	$("#firstname-info").html("").hide();
+	$("#email-info").html("").hide();
+
+	if (firstname.trim() == "") {
+		$("#firstname-info").html("required.").css("color", "#ee0000").show();
+		$("#firstname").addClass("error-field");
+		valid = false;
+	}
+	if (email == "") {
+		$("#email-info").html("required").css("color", "#ee0000").show();
+		$("#email").addClass("error-field");
+		valid = false;
+	} else if (email.trim() == "") {
+		$("#email-info").html("Invalid email address.").css("color", "#ee0000").show();
+		$("#email").addClass("error-field");
+		valid = false;
+	} else if (!emailRegex.test(email)) {
+		$("#email-info").html("Invalid email address.").css("color", "#ee0000")
+				.show();
+		$("#email").addClass("error-field");
+		valid = false;
+	}
+	if (Password.trim() == "") {
+		$("#signup-password-info").html("required.").css("color", "#ee0000").show();
+		$("#password").addClass("error-field");
+		valid = false;
+	}
+	if (ConfirmPassword.trim() == "") {
+		$("#confirm-password-info").html("required.").css("color", "#ee0000").show();
+		$("#confirm-password").addClass("error-field");
+		valid = false;
+	}
+	if(Password != ConfirmPassword){
+        $("#error-msg").html("Both passwords must be same.").show();
+        valid=false;
+    }
+	if (valid == false) {
+		$('.error-field').first().focus();
+		valid = false;
+	}
+	return valid;
+}
+</script>
+</BODY>
+</HTML>

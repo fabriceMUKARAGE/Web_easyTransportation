@@ -24,7 +24,7 @@
 <!-- finding the driver-->
 <form action="getDriver.php" method="POST">
         <div class="classAA">
-            <button style="background-color:brown" type="submit" name="finddriver"class="btn btn-default">Find a driver</button> <br><br>
+            <button style="background-color:green" type="submit" name="finddriver"class="btn btn-default">Find a driver</button> <br><br>
         </div>
     </div>
 
@@ -35,8 +35,9 @@
 /* when the student log in, 
     record data into the studentlogin table
 */
-if(isset($_POST['submitloginS'])){
+if(isset($_POST['login-btnS'])){
 $email= $_POST['email'];
+$password= $_POST['password'];
 $phone= $_POST['phone'];
 $location= $_POST['location'];
 
@@ -47,7 +48,7 @@ $location= $_POST['location'];
 		die("Connection failed: " . $conn->connect_error);
 	  }
  	  
-      $sql= "INSERT INTO StudentLogin (Ashesi_email, phone_number, location) VALUES ('$email', '$phone', '$location')";
+      $sql= "INSERT INTO StudentLogin (Ashesi_email, password, phone_number, location) VALUES ('$email', '$password','$phone', '$location')";
 
 	if ($conn->query($sql) === FALSE) {
 		echo "Error: " . $sql . "<br>" . $conn->error;
@@ -66,7 +67,7 @@ echo "<br>";
                           <?php 
                           
                           // Database connection
-	                        $conn = new mysqli('localhost','root','Agahozo12!@','Easy_Transportation');
+	                        $conn = new mysqli('localhost','root','Agahozo12!@','easy_transportation');
 	                        if ($conn->connect_error) {
 		                        die("Connection failed: " . $conn->connect_error);
 	                        }
@@ -110,15 +111,43 @@ echo "<br>";
                                 }}
                                 if(isset($_POST['finddriver'])){
                                   echo "<h2>Request for confirmation</h2>";
-                                  echo '<button style="background-color:green" type="submit" name="RequestForStudent" class="btn btn-default">Request</button>';
-                                
+                                  echo '
+                                  <form action="getDriver.php" method="POST" >
+                                  <button style="background-color:#0fff" type="submit" name="RequestForDriver" class="btn btn-default">Request</button></form>';
                                 }
+                                    //Sending request to the student
+                                    if(isset($_POST['RequestForDriver'])){
+                                      echo "Well done! The Driver will contact you shortly!";
+                                      
+                                    } 
+                                
+                                
                                   
                                     ?>
                                 
                             </div>
                         </div>
                       </div>
+                      <form action="loginS.php" method="POST">
+                            <div>
+                              <button style="background-color:red" type="submit" name="logOut" class="btn btn-default">Log out</button></form>
+                            </div>
+
+                  </form>
+                  <?php
+                  // if find the log out button is clicked, Delete you go to the main page
+                  if(isset($_POST['logOut'])){
+                    $conn = new mysqli('localhost','root','Agahozo12!@','easy_transportation');
+	                      if ($conn->connect_error) {
+		                      die("Connection failed:" . $conn->connect_error);
+	                      }
+                        $sql2 = "DELETE FROM studentlogin WHERE Ashesi_email='$email'";
+                        $result2 = mysqli_query($conn, $sql2); 
+                        
+                          
+                        
+                  }
+                  ?>
 
 </body>
   </html>
