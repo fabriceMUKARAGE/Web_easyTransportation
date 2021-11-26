@@ -19,10 +19,10 @@ if (! empty($_POST["signup-btn"])) {
 	<div class="phppot-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
-				<a href="loginD.php">Login</a>
+				<a href="loginD.PHP">Login</a>
 			</div>
 			<div class="">
-				<form name="sign-up" action="loginD.php" method="post"
+				<form name="sign-up" action="loginD.PHP" method="post"
 					onsubmit="return signupValidation()">
 					<div class="signup-heading">Register as Driver</div>
 				<?php

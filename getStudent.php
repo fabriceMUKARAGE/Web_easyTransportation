@@ -134,7 +134,7 @@ $location= $_POST['location'];
 
                         </div>
                       </div>
-                  <form action="loginD.php" method="POST">
+                  <form action="loginD.PHP" method="POST">
                             <div>
                               <button style="background-color:red" type="submit" name="logOut" class="btn btn-default">Log out</button></form>
                             </div>
